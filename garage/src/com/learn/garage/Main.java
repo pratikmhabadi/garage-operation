@@ -14,14 +14,14 @@ public class Main {
         GarageOperation garage = new GarageOperation();
 
         Map<Integer, Vehicle> garageMap = new TreeMap<>();
-        garageMap.put(1, new Vehicle("MH04AC9345", "repaired", "car", 500));
-        garageMap.put(2, new Vehicle("MH04AC9345", "repaired", "bike", 200));
-        garageMap.put(3, new Vehicle("MH04AC9345", "repaired", "bike", 200));
-        garageMap.put(7, new Vehicle("MH04AC9345", "repaired", "car", 500));
-        garageMap.put(8, new Vehicle("MH04AC9345", "repaired", "bike", 200));
-        garageMap.put(4, new Vehicle("MH04AC9345", "repaired", "car", 500));
-        garageMap.put(6, new Vehicle("MH04AC9345", "repairing", "bike", 200));
-        garageMap.put(5, new Vehicle("MH04AC9345", "repairing", "car", 500));
+        garageMap.put(1, new Vehicle(1, "MH04AC9345", "repaired", "car", 500));
+        garageMap.put(2, new Vehicle(2, "MH04AC9345", "repaired", "bike", 200));
+        garageMap.put(3, new Vehicle(3, "MH04AC9345", "repaired", "bike", 200));
+        garageMap.put(7, new Vehicle(7, "MH04AC9345", "repaired", "car", 500));
+        garageMap.put(8, new Vehicle(8, "MH04AC9345", "repaired", "bike", 200));
+        garageMap.put(4, new Vehicle(4, "MH04AC9345", "repaired", "car", 500));
+        garageMap.put(6, new Vehicle(6, "MH04AC9345", "repaired", "bike", 200));
+        garageMap.put(5, new Vehicle(5, "MH04AC9345", "repairing", "car", 500));
 
         int work = 1;
         while (work > 0) {

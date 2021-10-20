@@ -1,13 +1,10 @@
 package com.learn.garage;
 
 
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 public class GarageOperation {
-    //get Id for new vehicle
+    //get ID for new vehicle
     public int getId(Map<Integer, Vehicle> vehicleMap) {
         if (vehicleMap.isEmpty()) {
             return 0;
@@ -27,68 +24,28 @@ public class GarageOperation {
         }
     }
 
-    //to get all ongoing repairs vehicles
-    public Map<Integer, Vehicle> getAllOngoingRepair(Map<Integer, Vehicle> vehicleMap) {
-        Map<Integer, Vehicle> vehicleMap1 = new TreeMap<>();
+    //to get Vehicles by Status repairing or repaired.
+    public List<Vehicle> getVehiclesByStatus(Map<Integer, Vehicle> vehicleMap, String status) {
+        List<Vehicle> vehicleList = new ArrayList<>();
         for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
-            if (vehicleEntry.getValue().getStatus().equals("repairing")) {
-                vehicleMap1.put(vehicleEntry.getKey(), vehicleEntry.getValue());
+            if (vehicleEntry.getValue().getStatus().equals(status)) {
+                vehicleList.add(vehicleEntry.getValue());
             }
         }
-        return vehicleMap1;
+        return vehicleList;
     }
 
-    //to get all repaired vehicles
-    public Map<Integer, Vehicle> getAllRepaired(Map<Integer, Vehicle> vehicleMap) {
-        Map<Integer, Vehicle> vehicleMap1 = new TreeMap<>();
-        for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
-            if (vehicleEntry.getValue().getStatus().equals("repaired")) {
-                vehicleMap1.put(vehicleEntry.getKey(), vehicleEntry.getValue());
-            }
-        }
-        return vehicleMap1;
-    }
-
-    /* public void displayAll(Map<Integer, Vehicle> vehicleMap) {
-        for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
-            System.out.println("***********************");
-            System.out.println("Id :" + vehicleEntry.getKey());
-            System.out.println("Register No :" + vehicleEntry.getValue().getRegisterNo());
-            System.out.println("Vehicle Type :" + vehicleEntry.getValue().getType());
-            System.out.println("Vehicle Cost :" + vehicleEntry.getValue().getCost());
-            System.out.println("Vehicle Status :" + vehicleEntry.getValue().getStatus());
-        }
-        System.out.println("***********************");
-    }
-
-    public Map<Integer, Vehicle> getAllBikes(Map<Integer, Vehicle> vehicleMap) {
-        Map<Integer, Vehicle> bikeMap = new TreeMap<>();
-        for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
-            if (vehicleEntry.getValue().getType().equals("bike")) {
-                bikeMap.put(vehicleEntry.getKey(), vehicleEntry.getValue());
-            }
-        }
-        return bikeMap;
-    }
-
-   public Map<Integer, Vehicle> getAllCars(Map<Integer, Vehicle> vehicleMap) {
-        Map<Integer, Vehicle> carMap = new TreeMap<>();
-        for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
-            if (vehicleEntry.getValue().getType().equals("car")) {
-                carMap.put(vehicleEntry.getKey(), vehicleEntry.getValue());
-            }
-        }
-        return carMap;
-    }*/
     //switching operations by inputs
     public void operation(Map<Integer, Vehicle> vehicleMap, int operationNO) {
         try {
+            String repaired = "repaired";
+            String repairing = "repairing";
             switch (operationNO) {
                 case 1://show  account balance
                     double balance = 0.0;
-                    Map<Integer, Vehicle> map0 = getAllRepaired(vehicleMap);
-                    for (Map.Entry<Integer, Vehicle> map : map0.entrySet()) {
-                        balance += map.getValue().getCost();
+                    List<Vehicle> repairedAllVehicleList = getVehiclesByStatus(vehicleMap, repaired);
+                    for (Vehicle vehicle : repairedAllVehicleList) {
+                        balance += vehicle.getCost();
                     }
                     System.out.println("***********************");
                     System.out.println("Balance :" + balance);
@@ -96,10 +53,10 @@ public class GarageOperation {
                     break;
 
                 case 2://Show ongoing repairs
-                    Map<Integer, Vehicle> map = getAllOngoingRepair(vehicleMap);
+                    List<Vehicle> repairingVehicleList = getVehiclesByStatus(vehicleMap, repairing);
                     System.out.println("***********************");
-                    for (Map.Entry<Integer, Vehicle> entry : map.entrySet()) {
-                        System.out.println("ID :" + entry.getKey() + "  Register No :" + entry.getValue().getRegisterNo() + "  Vehicle Type :" + entry.getValue().getType());
+                    for (Vehicle vehicle : repairingVehicleList) {
+                        System.out.println("ID :" + vehicle.getId() + "  Register No :" + vehicle.getRegisterNo() + "  Vehicle Type :" + vehicle.getType());
                     }
                     System.out.println("***********************");
                     break;
@@ -107,16 +64,16 @@ public class GarageOperation {
                 case 3://Show repaired vehicles summary
                     int car = 0;
                     int bike = 0;
-                    Map<Integer, Vehicle> map1 = getAllRepaired(vehicleMap);
+                    List<Vehicle> repairedVehicleList = getVehiclesByStatus(vehicleMap, repaired);
                     System.out.println("***********************");
                     System.out.println("*Repaired vehicles Summary*");
-                    for (Map.Entry<Integer, Vehicle> entry : map1.entrySet()) {
-                        if (entry.getValue().getType().equals("bike")) {
+                    for (Vehicle vehicle : repairedVehicleList) {
+                        if (vehicle.getType().equals("bike")) {
                             bike++;
                         } else {
                             car++;
                         }
-                        System.out.println("Id :" + entry.getKey() + " Register No :" + entry.getValue().getRegisterNo() + "  Vehicle Type :" + entry.getValue().getType() + "  Vehicle Cost :" + entry.getValue().getCost());
+                        System.out.println("Id :" + vehicle.getId() + " Register No :" + vehicle.getRegisterNo() + "  Vehicle Type :" + vehicle.getType() + "  Vehicle Cost :" + vehicle.getCost());
                     }
                     System.out.println("***********************");
                     double bikeTotal = bike * 200;
@@ -130,28 +87,28 @@ public class GarageOperation {
 
                 case 4:// add new vehicle
                     Scanner sc = new Scanner(System.in);
-                    Map<Integer, Vehicle> map2 = getAllOngoingRepair(vehicleMap);
+                    List<Vehicle> repairingAllVehicleList = getVehiclesByStatus(vehicleMap, repairing);
                     System.out.println("***********************");
-                    if ((map2.size() < 2) && (map2.size() > 0)) {
+                    if (repairingAllVehicleList.size() < 2) {
                         System.out.println("Enter Your Vehicle Register No");
                         String registerNo = sc.next().toUpperCase(Locale.ROOT);
-                        System.out.println("Enter Your Vehicle Type ");
+                        System.out.println("Enter Your Vehicle Type (bike / car) ");
                         String vehicleType = sc.next().toLowerCase(Locale.ROOT);
-                        if (!vehicleType.equals("bike") || !vehicleType.equals("car")) {
-                            int n = 1;
-                            while (n > 0) {
-                                System.out.println("Enter Your Vehicle Type again (bike / car) ");
+                        int n = 1;
+                        while (n > 0) {
+                            if (vehicleType.equals("bike") || vehicleType.equals("car")) {
+                                n = 0;
+                            } else {
+                                System.out.println("Sorry ,we repair only cars and bike " +
+                                        "Enter Your Vehicle Type again (bike / car):");
                                 vehicleType = sc.next().toLowerCase(Locale.ROOT);
-                                if (vehicleType.equals("bike") || vehicleType.equals("car")) {
-                                    n = 0;
-                                }
                             }
                         }
                         int token = getId(vehicleMap);
                         if (vehicleType.equals("bike")) {
-                            vehicleMap.put(token, new Vehicle(registerNo, "repairing", vehicleType, 200));
+                            vehicleMap.put(token, new Vehicle(token, registerNo, "repairing", vehicleType, 200));
                         } else {
-                            vehicleMap.put(token, new Vehicle(registerNo, "repairing", vehicleType, 500));
+                            vehicleMap.put(token, new Vehicle(token, registerNo, "repairing", vehicleType, 500));
                         }
                         System.out.println("Your Token No is :" + token);
 
