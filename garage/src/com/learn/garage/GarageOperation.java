@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-public class garageOperation extends Garage {
-    //get key
-    public int getIndex(Map<Integer, Vehicle> vehicleMap) {
+public class GarageOperation {
+    //get Id for new vehicle
+    public int getId(Map<Integer, Vehicle> vehicleMap) {
         if (vehicleMap.isEmpty()) {
             return 0;
         } else {
@@ -17,16 +17,17 @@ public class garageOperation extends Garage {
         }
     }
 
+    //for changing status repairing to repaired
     public void getUpdateStatus(Map<Integer, Vehicle> vehicleMap, int id) {
         if (vehicleMap.get(id).getStatus().equals("repairing")) {
             vehicleMap.get(id).setStatus("repaired");
-            System.out.println("Token No " +id + " has been repaired");
-            setBalance(getBalance() + vehicleMap.get(id).getCost());
+            System.out.println("Token No " + id + " has been repaired");
         } else {
-            System.out.println("Token No " +id + " is already repaired");
+            System.out.println("Token No " + id + " is already repaired");
         }
     }
 
+    //to get all ongoing repairs vehicles
     public Map<Integer, Vehicle> getAllOngoingRepair(Map<Integer, Vehicle> vehicleMap) {
         Map<Integer, Vehicle> vehicleMap1 = new TreeMap<>();
         for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
@@ -37,6 +38,7 @@ public class garageOperation extends Garage {
         return vehicleMap1;
     }
 
+    //to get all repaired vehicles
     public Map<Integer, Vehicle> getAllRepaired(Map<Integer, Vehicle> vehicleMap) {
         Map<Integer, Vehicle> vehicleMap1 = new TreeMap<>();
         for (Map.Entry<Integer, Vehicle> vehicleEntry : vehicleMap.entrySet()) {
@@ -78,13 +80,18 @@ public class garageOperation extends Garage {
         }
         return carMap;
     }*/
-
+    //switching operations by inputs
     public void operation(Map<Integer, Vehicle> vehicleMap, int operationNO) {
         try {
             switch (operationNO) {
                 case 1://show  account balance
+                    double balance = 0.0;
+                    Map<Integer, Vehicle> map0 = getAllRepaired(vehicleMap);
+                    for (Map.Entry<Integer, Vehicle> map : map0.entrySet()) {
+                        balance += map.getValue().getCost();
+                    }
                     System.out.println("***********************");
-                    System.out.println("Balance :" + getBalance());
+                    System.out.println("Balance :" + balance);
                     System.out.println("***********************");
                     break;
 
@@ -109,7 +116,7 @@ public class garageOperation extends Garage {
                         } else {
                             car++;
                         }
-                        System.out.println("Id :"+entry.getKey()+ " Register No :" + entry.getValue().getRegisterNo() + "  Vehicle Type :" + entry.getValue().getType() + "  Vehicle Cost :" + entry.getValue().getCost());
+                        System.out.println("Id :" + entry.getKey() + " Register No :" + entry.getValue().getRegisterNo() + "  Vehicle Type :" + entry.getValue().getType() + "  Vehicle Cost :" + entry.getValue().getCost());
                     }
                     System.out.println("***********************");
                     double bikeTotal = bike * 200;
@@ -117,11 +124,11 @@ public class garageOperation extends Garage {
                     double total = bikeTotal + carTotal;
                     System.out.println("Total Balance :" + total);
                     System.out.println(" Bikes = " + bike + " * 200 = " + bikeTotal);
-                    System.out.println(" Cars = " + car + " * 200 = " + carTotal);
+                    System.out.println(" Cars = " + car + " * 500 = " + carTotal);
                     System.out.println("***********************");
                     break;
 
-                case 4:// add new
+                case 4:// add new vehicle
                     Scanner sc = new Scanner(System.in);
                     Map<Integer, Vehicle> map2 = getAllOngoingRepair(vehicleMap);
                     System.out.println("***********************");
@@ -140,7 +147,7 @@ public class garageOperation extends Garage {
                                 }
                             }
                         }
-                        int token = getIndex(vehicleMap);
+                        int token = getId(vehicleMap);
                         if (vehicleType.equals("bike")) {
                             vehicleMap.put(token, new Vehicle(registerNo, "repairing", vehicleType, 200));
                         } else {
@@ -156,11 +163,11 @@ public class garageOperation extends Garage {
 
                 case 5://get update Status
                     System.out.println("***********************");
-                    operation(vehicleMap,2);
+                    operation(vehicleMap, 2);
                     Scanner sc1 = new Scanner(System.in);
                     System.out.println("Select id to change status :");
                     int token = sc1.nextInt();
-                    getUpdateStatus(vehicleMap,token);
+                    getUpdateStatus(vehicleMap, token);
                     System.out.println("***********************");
                     break;
 

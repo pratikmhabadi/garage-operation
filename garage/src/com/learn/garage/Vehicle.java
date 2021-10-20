@@ -17,10 +17,6 @@ public class Vehicle {
         return registerNo;
     }
 
-    public void setRegisterNo(String registerNo) {
-        this.registerNo = registerNo;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -33,15 +29,8 @@ public class Vehicle {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
-        this.cost = cost;
-    }
 }

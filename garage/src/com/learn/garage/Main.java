@@ -11,7 +11,7 @@ public class Main {
         // write your code here
 
         Scanner sc = new Scanner(System.in);
-        garageOperation garage = new garageOperation();
+        GarageOperation garage = new GarageOperation();
 
         Map<Integer, Vehicle> garageMap = new TreeMap<>();
         garageMap.put(1, new Vehicle("MH04AC9345", "repaired", "car", 500));
@@ -42,7 +42,7 @@ public class Main {
             System.out.println("Would you like to continue? (y/n) :");
             String exit = sc.next().toUpperCase(Locale.ROOT);
             if (exit.equals("N")) {
-                System.out.println("Thank You");
+                System.out.println("***Thank You***");
                 work = 0;
             }
         }
