@@ -120,7 +120,11 @@ public class GarageOperation {
 
                 case 5://get update Status
                     System.out.println("***********************");
-                    operation(vehicleMap, 2);
+                    List<Vehicle> repairingVehicleList1 = getVehiclesByStatus(vehicleMap, repairing);
+                    System.out.println("***********************");
+                    for (Vehicle vehicle : repairingVehicleList1) {
+                        System.out.println("ID :" + vehicle.getId() + "  Register No :" + vehicle.getRegisterNo() + "  Vehicle Type :" + vehicle.getType());
+                    }
                     Scanner sc1 = new Scanner(System.in);
                     System.out.println("Select id to change status :");
                     int token = sc1.nextInt();
