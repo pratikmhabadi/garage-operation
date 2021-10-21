@@ -20,7 +20,7 @@ public class Main {
         garageMap.put(7, new Vehicle(7, "MH04AC9345", "repaired", "car", 500));
         garageMap.put(8, new Vehicle(8, "MH04AC9345", "repaired", "bike", 200));
         garageMap.put(4, new Vehicle(4, "MH04AC9345", "repaired", "car", 500));
-        garageMap.put(6, new Vehicle(6, "MH04AC9345", "repaired", "bike", 200));
+        garageMap.put(6, new Vehicle(6, "MH04AC9345", "repairing", "bike", 200));
         garageMap.put(5, new Vehicle(5, "MH04AC9345", "repairing", "car", 500));
 
         int work = 1;

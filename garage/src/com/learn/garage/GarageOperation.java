@@ -15,7 +15,7 @@ public class GarageOperation {
     }
 
     //for changing status repairing to repaired
-    public void getUpdateStatus(Map<Integer, Vehicle> vehicleMap, int id) {
+    public void updateStatusToRepaired(Map<Integer, Vehicle> vehicleMap, int id) {
         if (vehicleMap.get(id).getStatus().equals("repairing")) {
             vehicleMap.get(id).setStatus("repaired");
             System.out.println("Token No " + id + " has been repaired");
@@ -121,14 +121,14 @@ public class GarageOperation {
                 case 5://get update Status
                     System.out.println("***********************");
                     List<Vehicle> repairingVehicleList1 = getVehiclesByStatus(vehicleMap, repairing);
-                    System.out.println("***********************");
                     for (Vehicle vehicle : repairingVehicleList1) {
                         System.out.println("ID :" + vehicle.getId() + "  Register No :" + vehicle.getRegisterNo() + "  Vehicle Type :" + vehicle.getType());
                     }
+                    System.out.println("***********************");
                     Scanner sc1 = new Scanner(System.in);
-                    System.out.println("Select id to change status :");
+                    System.out.println("Select ID to change status :");
                     int token = sc1.nextInt();
-                    getUpdateStatus(vehicleMap, token);
+                    updateStatusToRepaired(vehicleMap, token);
                     System.out.println("***********************");
                     break;
 
