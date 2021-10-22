@@ -6,8 +6,9 @@ import java.util.TreeMap;
 
 public class Main {
     static GarageOperation garage = new GarageOperation();
+    static Map<Integer, Vehicle> garageMap = new TreeMap<>();
 
-    public static void updateStatus(Map<Integer, Vehicle> garageMap, int token) {
+    public static void updateStatus(int token) {
         try {
             Vehicle vehicle = garageMap.get(token);
             vehicle = garage.updateStatusToRepaired(vehicle);
@@ -17,7 +18,7 @@ public class Main {
         }
     }
 
-    public static void displayBalance(Map<Integer, Vehicle> garageMap) {
+    public static void displayBalance() {
         String status = "repaired";
         double balance = 0.0;
         List<Vehicle> repairedAllVehicleList = garage.getVehiclesByStatus(garageMap, status);
@@ -27,7 +28,7 @@ public class Main {
         System.out.println("Balance :" + balance);
     }
 
-    public static void displayOngoingRepair(Map<Integer, Vehicle> garageMap) {
+    public static void displayOngoingRepair() {
         String status = "repairing";
         List<Vehicle> repairingVehicleList = garage.getVehiclesByStatus(garageMap, status);
         if (!repairingVehicleList.isEmpty()) {
@@ -39,18 +40,17 @@ public class Main {
         }
     }
 
-    public static void addNewEntry(Map<Integer, Vehicle> garageMap, String registerNo, String type) {
-        String status = "repairing";
+    public static void addNewEntry(String registerNo, String type) {
         int token = garage.getId(garageMap);
-        List<Vehicle> repairedAllVehicleList = garage.getVehiclesByStatus(garageMap, status);
+        List<Vehicle> repairedAllVehicleList = garage.getVehiclesByStatus(garageMap, "repairing");
         if (repairedAllVehicleList.size() < 2) {
             switch (type) {
                 case "bike":
-                    garageMap.put(token, new Vehicle(token, registerNo, status, type, 200));
+                    garageMap.put(token, new Vehicle(token, registerNo, "repairing", type, 200));
                     System.out.println("Token no is " + token);
                     break;
                 case "car":
-                    garageMap.put(token, new Vehicle(token, registerNo, status, type, 500));
+                    garageMap.put(token, new Vehicle(token, registerNo, "repairing", type, 500));
                     System.out.println("Token no is " + token);
                     break;
                 default:
@@ -62,7 +62,7 @@ public class Main {
         }
     }
 
-    public static void displayRepairedSummary(Map<Integer, Vehicle> garageMap) {
+    public static void displayRepairedSummary() {
         int car = 0;
         int bike = 0;
         String status = "repaired";
@@ -83,7 +83,7 @@ public class Main {
         System.out.println(" Cars = " + car + " * 500 = " + carTotal);
     }
 
-    public static void displayMap(Map<Integer, Vehicle> garageMap) {
+    public static void displayMap() {
         for (Map.Entry<Integer, Vehicle> entry : garageMap.entrySet()) {
             System.out.println("Id :" + entry.getKey() + " Register No :" + entry.getValue().getRegisterNo() + "  Vehicle Type :" + entry.getValue().getType() + "  Vehicle Cost :" + entry.getValue().getCost() + "  Status : " + entry.getValue().getStatus());
         }
@@ -91,7 +91,7 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        Map<Integer, Vehicle> garageMap = new TreeMap<>();
+
         garageMap.put(1, new Vehicle(1, "MH04AC9345", "repaired", "car", 500));
         garageMap.put(2, new Vehicle(2, "MH04AC9345", "repaired", "bike", 200));
         garageMap.put(3, new Vehicle(3, "MH04AC9345", "repaired", "bike", 200));
@@ -102,12 +102,12 @@ public class Main {
         garageMap.put(5, new Vehicle(5, "MH04AC9345", "repairing", "car", 500));
 
 
-       displayMap(garageMap);
-       displayBalance(garageMap);
-       displayRepairedSummary(garageMap);
-       displayOngoingRepair(garageMap);
-       addNewEntry(garageMap,"MH04AC2345","car");
-       updateStatus(garageMap,1);
+        displayMap();
+        displayBalance();
+        displayRepairedSummary();
+        displayOngoingRepair();
+        addNewEntry("MH04AC2345", "car");
+        updateStatus(1);
 
 
     }
