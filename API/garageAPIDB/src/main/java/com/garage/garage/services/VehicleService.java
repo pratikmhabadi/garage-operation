@@ -18,7 +18,7 @@ public interface VehicleService {
     Vehicle getVehicle(int vehicleId);
 
     //add new vehicle by registerNo and type
-    Vehicle addVehicle(Vehicle vehicle);
+    Vehicle addVehicle(String registerNo,String vehicleType);
 
     //update vehicle by id
     Vehicle updateVehicle(int vehicleId);

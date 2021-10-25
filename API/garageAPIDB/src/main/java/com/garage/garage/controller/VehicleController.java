@@ -27,8 +27,8 @@ public class VehicleController {
 
     //add new vehicle
     @PostMapping("/vehicles/{registerNo}/{vehicleType}")
-    public Vehicle addVehicle(@RequestBody Vehicle vehicle) {
-        return this.vehicleService.addVehicle(vehicle);
+    public Vehicle addVehicle(@PathVariable String registerNo,@PathVariable String vehicleType) {
+        return this.vehicleService.addVehicle(registerNo,vehicleType);
     }
 
     //delete vehicle by ID
@@ -66,27 +66,4 @@ public class VehicleController {
     public List<Vehicle> getAllCars(){
         return this.vehicleService.getVehiclesByType("car");
     }
-
-    /*@GetMapping("/vehicles/summary")
-    public void getSummary (){
-        int bike =0;
-        int car = 0;
-        for(Vehicle vehicle :this.getAllRepairedVehicles()){
-           if(vehicle.getVehicleType().equals("bike")){
-               bike++;
-           }else if(vehicle.getVehicleType().equals("car")){
-               car++;
-           }
-        }
-        int totalBike = bike*200;
-        int totalCar=car*500;
-        int total=totalBike+totalCar;
-        System.out.println("Count of repaired bike : "+bike);
-        System.out.println("Total Bike balance :"+bike+" * 200 = "+totalBike);
-        System.out.println("Count of repaired bike : "+car);
-        System.out.println("Total Car balance :"+car+" * 500 = "+totalCar);
-        System.out.println("Total Balance :"+total);
-    }*/
-
-
 }

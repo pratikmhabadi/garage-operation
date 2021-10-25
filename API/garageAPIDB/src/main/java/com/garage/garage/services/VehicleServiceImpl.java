@@ -19,12 +19,24 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> getVehiclesByStatus(String vehicleStatus) {
-        return vehicleDao.findAllByStatus(vehicleStatus);
+        List<Vehicle> list = new ArrayList<>();
+         for(Vehicle vehicle:vehicleDao.findAll()){
+             if(vehicle.getVehicleStatus().equals(vehicleStatus)){
+                 list.add(vehicle);
+             }
+         }
+        return list;
     }
 
     @Override
     public List<Vehicle> getVehiclesByType(String vehicleType) {
-        return vehicleDao.findAllByType(vehicleType);
+        List<Vehicle> list = new ArrayList<>();
+        for(Vehicle vehicle:vehicleDao.findAll()){
+            if(vehicle.getVehicleType().equals(vehicleType)){
+                list.add(vehicle);
+            }
+        }
+        return list;
     }
 
     @Override
@@ -33,8 +45,22 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public Vehicle addVehicle(Vehicle vehicle) {
-        return vehicleDao.save(vehicle);
+    public Vehicle addVehicle(String registerNo, String vehicleType) {
+        String type = vehicleType.toLowerCase(Locale.ROOT);
+        Vehicle vehicle = new Vehicle();
+        vehicle.setRegisterNo(registerNo.toUpperCase(Locale.ROOT));
+        vehicle.setVehicleStatus("repairing");
+        if (type.equals("bike")) {
+            vehicle.setVehicleType(type);
+            vehicle.setCost(200);
+            return vehicleDao.save(vehicle);
+        } else if (type.equals("car")) {
+            vehicle.setVehicleType(type);
+            vehicle.setCost(500);
+            return vehicleDao.save(vehicle);
+        } else {
+            return null;
+        }
     }
 
 
