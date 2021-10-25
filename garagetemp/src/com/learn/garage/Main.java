@@ -102,12 +102,15 @@ public class Main {
         garageMap.put(5, new Vehicle(5, "MH04AC9345", "repairing", "car", 500));
 
 
-        displayMap();
-        displayBalance();
-        displayRepairedSummary();
+       // displayMap();
+       // displayBalance();
+        //displayRepairedSummary();
         displayOngoingRepair();
-        addNewEntry("MH04AC2345", "car");
-        updateStatus(1);
+       // addNewEntry("MH04AC2345", "car");
+        updateStatus(5);
+        updateStatus(6);
+        displayOngoingRepair();
+
 
 
     }
