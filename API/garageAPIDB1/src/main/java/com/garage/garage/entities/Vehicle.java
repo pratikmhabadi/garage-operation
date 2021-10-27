@@ -1,39 +1,47 @@
 package com.garage.garage.entities;
 
-import org.hibernate.annotations.GeneratorType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
-@Table
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int vehicleId;
     private String registerNo;
     private String vehicleStatus;
     private String vehicleType;
     private double cost;
+    private String date;
 
-    public Vehicle(int id, String registerNo, String vehicleStatus, String vehicleType, double cost) {
-        this.id = id;
+    @ManyToOne
+    @JoinColumn(name="garage_id")
+    @JsonBackReference
+    private Garage garage;
+
+    public Vehicle(int vehicleId, String registerNo, String vehicleStatus, String vehicleType, double cost) {
+        this.vehicleId = vehicleId;
         this.registerNo = registerNo;
         this.vehicleStatus = vehicleStatus;
         this.vehicleType = vehicleType;
         this.cost = cost;
     }
 
+
     public Vehicle() {
         super();
     }
 
-    public int getId() {
-        return id;
+    public int getVehicleId() {
+        return vehicleId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setVehicleId(int vehicleId) {
+        this.vehicleId = vehicleId;
     }
 
     public String getRegisterNo() {
@@ -66,5 +74,21 @@ public class Vehicle {
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Garage getGarage() {
+        return garage;
+    }
+
+    public void setGarage(Garage garage) {
+        this.garage = garage;
     }
 }
